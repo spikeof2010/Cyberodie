@@ -1,0 +1,55 @@
+You can no longer smell.
+You can no longer taste.
+You can no longer see.
+You can no longer feel.
+You can no longer hear.
+You grow two extra limbs as long as you have this equipped.
+It shimmers brightly.
+You can detect life nearby.
+You can detect undead nearby.
+You can detect magic nearby.
+You can understand any language.
+You are fireproof.
+You automatically detect any poison nearby.
+As long as it is equipped, you are followed by a small ball of light.
+Your voice is louder with this equipped.
+Once equipped, it is permanently stuck to you.
+Animals are automatically friendly to you.
+You can sense tremors in the ground with ease.
+You can no longer tell lies.
+You can no longer tell the truth.
+You have a horrid stench.
+At will, you can conjure up a small portal to a random destination.
+You can no longer die while you have this equipped.
+You can no longer become wet.
+Any enemy that would touch you is immediately teleported 50 feet in a random direction.
+At will, you may make this item turn invisible.
+You grow plant life around you with each step.
+Plants around you die slowly.
+Your programs crash half as often.
+You no longer have a shadow.
+This item allows you to meld with the shadows.
+At will, you may become invisible.
+At will, you may put a shield of light around you and your allies.
+At will, lets you mind control one being.
+Once per day, creates a paper map of all your surroundings in 5 miles.
+It is encapsulated with a small gem which can hold a soul.
+Animals are automatically agressive towards you.
+Your limbs become animate even after they are cut off.
+Once per day, emit a field of expanding cold around you.
+You can detect resonating crystals near you.
+While equipped, you'll come across more treasures.
+While on your person, you'll come along less treasures.
+You can see with your eyes closed.
+You age faster while this is equipped.
+You age slower while this is equipped.
+While equipped, you have a scar that you can never conceal.
+People tend to like you more.
+People tend to dislike you more.
+While equipped, someone within 50 miles of you will hunt you to your death.
+Everything you touch turns to gold.
+Everything you touch turns to stone.
+Sealed away inside of it is a powerful slumbering god.
+Sealed away inside of it is a powerful slumbering demon.
+This item can talk.
+This item is intelligent.

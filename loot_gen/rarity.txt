@@ -1,0 +1,16 @@
+Broken
+Legendary
+Rare
+Uncommon
+Pitiful
+Omega
+Godlike
+Ultra Rare
+Super Rare
+Omega Legendary
+Outstanding
+Lesser
+Greater
+Final
+Mythic Rare
+Secret Rare

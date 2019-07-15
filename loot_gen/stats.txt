@@ -1,0 +1,92 @@
+Intelligence
+Strength
+Endurance
+Luck
+Charisma
+Wisdom
+Constitution
+Smarts
+Brains
+Body
+Perception
+Love
+Appeal
+Appearance
+Wealth
+Dogliness
+Furriness
+Dance Skills
+Climbing
+Walking
+Swimming
+Crafting
+Flamability
+Combustability
+Casting
+Magic
+Agility
+Readiness
+Insanity
+Dirtiness
+Cleanliness
+Hearing
+Sight
+Nightvision
+Heatvision
+Echolocation
+Mana
+Health
+Size
+Wackiness
+Craziness
+Beauty
+Girth
+Length
+Posture
+Sliminess
+Corruption
+Purity
+Resistance to Fire
+Resistance to Ice
+Resistance to Electricity
+Resistance to Undead
+Resistance to Animals
+Resistance to Demons
+Resistance to Angels
+Resistance to Poison
+Birdliness
+Coolness
+Dumbness
+Art
+Coding
+Resistance
+Hunger
+Carry Weight
+Speed
+Leadership
+Weapon Handling
+Transmutation
+Quickness
+Sanity
+Destruction
+Doom
+Juiciness
+Life
+Debt
+Anger
+Happiness
+Healing
+Regeneration
+Summoning
+Conjuration
+Alteration
+Confusion
+Clarity
+Punchiness
+Strongness
+Head Size
+Spell Reflection
+Mana Regeneration
+Attack Speed
+Armor
+All Attributes
