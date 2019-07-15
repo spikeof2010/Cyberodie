@@ -232,4 +232,4 @@ async def loot(ctx, *args):
 
 #write here
 
-client.run('NTQ5MDI3MDUyNzUwMzcyODk0.D1N6Xg.K67-x5gr29Ar40ldeB8D73VtjU4')
+#bot token here
