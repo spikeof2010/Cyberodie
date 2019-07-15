@@ -29,7 +29,6 @@ async def on_message(message):
     print('<{:%Y-%m-%d %H:%M}'.format(datetime.datetime.now()) + "|" + str(message.author) + "|#" + str(message.channel) + "> "  + message.content)
     chirplog = open("chirplog.txt", "a")
     chirplog.write('<{:%Y-%m-%d %H:%M}'.format(datetime.datetime.now()) + "|" + str(message.author) + "|#" + str(message.channel) + "> "  + message.content + "\n")
-    peptalk = True
     if message.author.bot or message.author.id == client.user.id:
         return
     await bot.process_commands(message)
@@ -81,29 +80,29 @@ async def on_message(message):
         
 
 #CORE
-@bot.command(pass_context=True)
+@bot.command()
 async def ping(ctx):  
     await client.send_message(ctx.message.channel, "Pong")
 
-@bot.command(pass_context=True)
+@bot.command()
 async def trueecho(ctx, *args):  
     await client.delete_message(ctx.message)
     await client.send_message(ctx.message.channel, ' '.join(args))
 
-@bot.command(pass_context=True)
+@bot.command()
 async def echo(ctx, *args):  
     await client.send_message(ctx.message.channel, ' '.join(args))
 
-@bot.command(pass_context=True)
+@bot.command()
 async def version(ctx): 
     await client.send_message(ctx.message.channel, "Chirptown")
 
-@bot.command(pass_context=True)
+@bot.command()
 async def patreon(ctx): 
     await client.send_message(ctx.message.channel, "Donate to my patreon!\n <http://tinyurl.com/berdpatreon>")
 
 #pyramid command
-@bot.command(pass_context=True)
+@bot.command()
 async def pyramid(ctx, *args): 
     args = " ".join(args)
     pyr_chars = list(args)
@@ -116,7 +115,7 @@ async def pyramid(ctx, *args):
     await client.send_message(ctx.message.channel, pyr)
 
 #help commands
-@bot.command(pass_context=True)
+@bot.command()
 async def commands(ctx): 
     await client.send_message(ctx.message.channel, """```
     o===Commands===o
@@ -134,6 +133,8 @@ async def commands(ctx):
 @bot.command(pass_context=True)
 async def playing(ctx, *args): 
     args = ' '.join(args)
+    if(ctx.message.author.id != config.ownerId):
+        return
     try:
          await client.change_presence(game=discord.Game(name=args))
          await client.send_message(ctx.message.channel, "Now playing " + args)
