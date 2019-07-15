@@ -1,14 +1,18 @@
 import datetime
 import random
 import re
+import json
 
 import discord
 from discord.ext import commands
 
 import birdfunctions
 
+
+config = json.load(open("config.json"))
+
 client = discord.Client()
-bot = commands.Bot(command_prefix='=')
+bot = commands.Bot(command_prefix=config.prefix)
 userlist = []
 chirplog = open("chirplog.txt", "w")
 
@@ -26,11 +30,11 @@ async def on_message(message):
     chirplog = open("chirplog.txt", "a")
     chirplog.write('<{:%Y-%m-%d %H:%M}'.format(datetime.datetime.now()) + "|" + str(message.author) + "|#" + str(message.channel) + "> "  + message.content + "\n")
     peptalk = True
-    if message.author.id == "549027052750372894":
+    if message.author.bot or message.author.id == client.user.id:
         return
     await bot.process_commands(message)
 
-    if message.author.id == "165949638770163713":
+    if message.author.id == config.ownerId:
         if message.content.lower().startswith("/echo"):
             await client.delete_message(message)
     
@@ -229,4 +233,4 @@ async def loot(ctx, *args):
 
 #write here
 
-#bot token here
+client.run(config.token)
