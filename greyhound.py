@@ -35,27 +35,24 @@ async def on_message(message):
             await client.delete_message(message)
     
 
-    if(message.author.id == "549027052750372894"):
-        one = 1
-    else:
-        if message.content.lower().startswith("chirp"):
-            await client.send_message(message.channel, "coocoo")
-        if message.content.lower().startswith("hoot"):
-            await client.send_message(message.channel, "who?")
-        if message.content.lower().startswith("caw"):
-            await client.send_message(message.channel, "caw")
-        if message.content.lower().startswith("cheep"):
-            await client.send_message(message.channel, "tweet tweet")
-        if message.content.lower().startswith("cluck"):
-            await client.send_message(message.channel, "cock-a-doodle-doo")
-        if message.content.lower().startswith("good bot"):
-            await client.send_message(message.channel, "<3")
-        if message.content.lower().startswith("oh yeah yeah"):
-            await client.send_message(message.channel, "oh yeah yeah yeah yeah")
-        if message.content.lower().startswith("show me the pidove") or message.content.lower().startswith("show me pidove") or message.content.lower().startswith("show me the bird"):
-            await client.send_message(message.channel, "<:pidove:277147728071360513>")
-        if message.content.lower().startswith("show me the grookey") or message.content.lower().startswith("show me grookey") or message.content.lower().startswith("who is the best gen 8 starter?"):
-            await client.send_message(message.channel, "<:grook:550434809038766090>")
+    if message.content.lower().startswith("chirp"):
+        await client.send_message(message.channel, "coocoo")
+    if message.content.lower().startswith("hoot"):
+        await client.send_message(message.channel, "who?")
+    if message.content.lower().startswith("caw"):
+        await client.send_message(message.channel, "caw")
+    if message.content.lower().startswith("cheep"):
+        await client.send_message(message.channel, "tweet tweet")
+    if message.content.lower().startswith("cluck"):
+        await client.send_message(message.channel, "cock-a-doodle-doo")
+    if message.content.lower().startswith("good bot"):
+        await client.send_message(message.channel, "<3")
+    if message.content.lower().startswith("oh yeah yeah"):
+        await client.send_message(message.channel, "oh yeah yeah yeah yeah")
+    if message.content.lower().startswith("show me the pidove") or message.content.lower().startswith("show me pidove") or message.content.lower().startswith("show me the bird"):
+        await client.send_message(message.channel, "<:pidove:277147728071360513>")
+    if message.content.lower().startswith("show me the grookey") or message.content.lower().startswith("show me grookey") or message.content.lower().startswith("who is the best gen 8 starter?"):
+        await client.send_message(message.channel, "<:grook:550434809038766090>")
     #battle command
     global userlist
     if "=battle" in message.content:
