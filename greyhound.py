@@ -26,9 +26,6 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    print('<{:%Y-%m-%d %H:%M}'.format(datetime.datetime.now()) + "|" + str(message.author) + "|#" + str(message.channel) + "> "  + message.content)
-    chirplog = open("chirplog.txt", "a")
-    chirplog.write('<{:%Y-%m-%d %H:%M}'.format(datetime.datetime.now()) + "|" + str(message.author) + "|#" + str(message.channel) + "> "  + message.content + "\n")
     if message.author.bot or message.author.id == client.user.id:
         return
     await bot.process_commands(message)
