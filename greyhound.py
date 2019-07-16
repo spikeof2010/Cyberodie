@@ -12,7 +12,7 @@ import birdfunctions
 config = json.load(open("config.json"))
 
 client = discord.Client()
-bot = commands.Bot(command_prefix=config.prefix)
+bot = commands.Bot(command_prefix=config['prefix'])
 userlist = []
 chirplog = open("chirplog.txt", "w")
 
@@ -30,7 +30,7 @@ async def on_message(message):
         return
     await bot.process_commands(message)
 
-    if message.author.id == config.ownerId:
+    if message.author.id == config['ownerId']:
         if message.content.lower().startswith("/echo"):
             await client.delete_message(message)
     
@@ -130,7 +130,7 @@ async def commands(ctx):
 @bot.command(pass_context=True)
 async def playing(ctx, *args): 
     args = ' '.join(args)
-    if(ctx.message.author.id != config.ownerId):
+    if(ctx.message.author.id != config['ownerId']):
         return
     try:
          await client.change_presence(game=discord.Game(name=args))
@@ -231,4 +231,4 @@ async def loot(ctx, *args):
 
 #write here
 
-client.run(config.token)
+client.run(config['token'])
