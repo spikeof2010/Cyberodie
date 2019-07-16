@@ -11,92 +11,71 @@ import birdfunctions
 
 config = json.load(open("config.json"))
 
-client = discord.Client()
-bot = commands.Bot(command_prefix=config.prefix)
-userlist = []
-chirplog = open("chirplog.txt", "w")
+bot = commands.Bot(command_prefix=config['prefix'])
 
-@client.event
+@bot.event
 async def on_ready():
     print('Starting bot')
-    print(client.user.name + " Online")
-    print(client.user.id)
+    print(bot.user.name + " Online")
+    print(bot.user.id)
     print('------------------')
-    await client.change_presence(game=discord.Game(name='6D mancala '))
+    await bot.change_presence(activity=discord.Game('tests'))
 
-@client.event
+@bot.event
 async def on_message(message):
-    if message.author.bot or message.author.id == client.user.id:
+    if message.author.id == bot.user.id:
         return
-    await bot.process_commands(message)
+    await bot.process_commands(message)  
 
-    if message.author.id == config.ownerId:
+    if message.author.id == config['ownerId']:
         if message.content.lower().startswith("/echo"):
-            await client.delete_message(message)
+            await message.delete()
     
 
+    channel = message.channel
+
     if message.content.lower().startswith("chirp"):
-        await client.send_message(message.channel, "coocoo")
+        await channel.send("coocoo")
     if message.content.lower().startswith("hoot"):
-        await client.send_message(message.channel, "who?")
+        await channel.send( "who?")
     if message.content.lower().startswith("caw"):
-        await client.send_message(message.channel, "caw")
+        await channel.send( "caw")
     if message.content.lower().startswith("cheep"):
-        await client.send_message(message.channel, "tweet tweet")
+        await channel.send( "tweet tweet")
     if message.content.lower().startswith("cluck"):
-        await client.send_message(message.channel, "cock-a-doodle-doo")
+        await channel.send( "cock-a-doodle-doo")
     if message.content.lower().startswith("good bot"):
-        await client.send_message(message.channel, "<3")
+        await channel.send( "<3")
     if message.content.lower().startswith("oh yeah yeah"):
-        await client.send_message(message.channel, "oh yeah yeah yeah yeah")
+        await channel.send( "oh yeah yeah yeah yeah")
     if message.content.lower().startswith("show me the pidove") or message.content.lower().startswith("show me pidove") or message.content.lower().startswith("show me the bird"):
-        await client.send_message(message.channel, "<:pidove:277147728071360513>")
+        await channel.send( "<:pidove:277147728071360513>")
     if message.content.lower().startswith("show me the grookey") or message.content.lower().startswith("show me grookey") or message.content.lower().startswith("who is the best gen 8 starter?"):
-        await client.send_message(message.channel, "<:grook:550434809038766090>")
-    #battle command
-    global userlist
-    if "=battle" in message.content:
-        ment = message.mentions
-        if ment == []:
-            await client.send_message(message.channel,"You need to ping someone to battle them.")
-            return
-        userlist.append(ment[0].id)
-        userlist.append(message.author.id)
-        epitaph = open("./situ/epitaph.txt").read().splitlines()
-        selected_user = random.choice(userlist)
-        userlist.remove(selected_user)
-        selected_user = await client.get_user_info(selected_user)
-        remaining_user = userlist[0]
-        remaining_user = await client.get_user_info(remaining_user)
-        situation = open("./situ/fight.txt").read().splitlines()
-        option = random.choice(situation)
-        option = option.split("&")
-        option = "**" + str(selected_user) + "**" + option[1] + "**" + str(remaining_user) + "**" + option[2]
-        userlist.clear()
-        await client.send_message(message.channel, option + "\n" + random.choice(epitaph) )
+        await channel.send( "<:grook:550434809038766090>")           
+    
         
 
 #CORE
 @bot.command()
 async def ping(ctx):  
-    await client.send_message(ctx.message.channel, "Pong")
+    await ctx.message.channel.send("Pong")
 
 @bot.command()
 async def trueecho(ctx, *args):  
-    await client.delete_message(ctx.message)
-    await client.send_message(ctx.message.channel, ' '.join(args))
+    await ctx.message.delete()
+    await ctx.message.channel.send(' '.join(args))
 
 @bot.command()
 async def echo(ctx, *args):  
-    await client.send_message(ctx.message.channel, ' '.join(args))
+    await ctx.message.channel.send(' '.join(args))
 
 @bot.command()
 async def version(ctx): 
-    await client.send_message(ctx.message.channel, "Chirptown")
+    await ctx.message.channel.send("Chirptown")
 
 @bot.command()
 async def patreon(ctx): 
-    await client.send_message(ctx.message.channel, "Donate to my patreon!\n <http://tinyurl.com/berdpatreon>")
+    await ctx.message.channel.send("Donate to my patreon!\n <http://tinyurl.com/berdpatreon>")
 
 #pyramid command
 @bot.command()
@@ -109,12 +88,12 @@ async def pyramid(ctx, *args):
         pyr.append("".join(pyr_chars))
         pyr_chars.remove(pyr_chars[0])
     pyr = "```{}```".format("\n".join(pyr))
-    await client.send_message(ctx.message.channel, pyr)
+    await ctx.message.channel.send(pyr)
 
 #help commands
 @bot.command()
 async def commands(ctx): 
-    await client.send_message(ctx.message.channel, """```
+    await ctx.message.channel.send("""```
     o===Commands===o
     \/\/\/\/\/\/\/\/
     ''''''''''''''''
@@ -130,34 +109,57 @@ async def commands(ctx):
 @bot.command(pass_context=True)
 async def playing(ctx, *args): 
     args = ' '.join(args)
-    if(ctx.message.author.id != config.ownerId):
+    if(ctx.author.id != config['ownerId']):
         return
     try:
-         await client.change_presence(game=discord.Game(name=args))
-         await client.send_message(ctx.message.channel, "Now playing " + args)
+         await bot.change_presence(activity=discord.Game(args))
+         await ctx.message.channel.send("Now playing " + args)
          print("Status changed to {}".format(args))
     except:
          author = "__**" + str(ctx.message.author) + "**__: "
-         await client.send_message(ctx.message.channel, "Sorry {}, couldn't change my status to '{}'".format(author, args))
+         await ctx.message.channel.send("Sorry {}, couldn't change my status to '{}'".format(author, args))
 
 @bot.command(pass_context=True)
 async def birdfact(ctx, *args): 
     bird_file="./bird/bird_facts.txt"
     lines = open(bird_file, encoding="utf8").read().splitlines()
     fact = random.choice(lines)
-    await client.send_message(ctx.message.channel, fact)
+    await ctx.message.channel.send(fact)
 
 @bot.command(pass_context=True)
 async def cardprompt(ctx, *args): 
     cardprompt = birdfunctions.card_gen()
-    await client.send_message(ctx.message.channel, cardprompt)
+    await ctx.message.channel.send(cardprompt)
+
+@bot.command()
+async def battle(ctx,*arx):
+    userlist = []
+    message = ctx.message
+    ment = message.mentions
+    if ment == []:
+        await message.channel.send("You need to ping someone to battle them.")
+        return
+    userlist.append(ment[0].id)
+    userlist.append(message.author.id)
+    epitaph = open("./situ/epitaph.txt").read().splitlines()
+    selected_user = random.choice(userlist)
+    userlist.remove(selected_user)
+    selected_user = bot.get_user(selected_user)
+    remaining_user = userlist[0]
+    remaining_user = bot.get_user(remaining_user)
+    situation = open("./situ/fight.txt").read().splitlines()
+    option = random.choice(situation)
+    option = option.split("&")
+    option = "**" + str(selected_user) + "**" + option[1] + "**" + str(remaining_user) + "**" + option[2]
+    userlist.clear()
+    await message.channel.send( option + "\n" + random.choice(epitaph) )
 
 @bot.command(pass_context=True)
 async def ball(ctx, *args): 
     bird_file="./8b/8b.txt"
     lines = open(bird_file, encoding="utf8").read().splitlines()
     fact = "**{}**".format(random.choice(lines))
-    await client.send_message(ctx.message.channel, fact)
+    await ctx.message.channel.send(fact)
 
 @bot.command(pass_context=True)
 async def face(ctx, *args):
@@ -186,17 +188,17 @@ async def face(ctx, *args):
         face.append(random.choice(beard))
     face.append("\n{Now presenting " + random.choice(name1) + random.choice(name2) + "!}")
     face = "```{}```".format("\n".join(face))
-    await client.send_message(ctx.message.channel, face)
+    await ctx.message.channel.send(face)
 
 @bot.command(pass_context=True)
 async def jahcoin(ctx, *args): 
     jah = "You currently have {} jahdollars, which is roughly equal to {} USD. <:XXX:539162270568284160>".format(float(random.randint(2,999)), float(random.randint(2,999)/random.uniform(0.5,10)))
-    await client.send_message(ctx.message.channel, jah)
+    await ctx.message.channel.send(jah)
 
 @bot.command(pass_context=True)
 async def jahrate(ctx, *args): 
     jah = "1 Jahdollar is equal to {} USD. <:XXX:539162270568284160>".format(1/(random.uniform(0.1,10)))
-    await client.send_message(ctx.message.channel, jah)
+    await ctx.message.channel.send(jah)
 
 @bot.command(pass_context=True)
 async def loot(ctx, *args): 
@@ -224,11 +226,11 @@ async def loot(ctx, *args):
     fug_loot.append("\n" + sword_border)
     fug_loot = "\n".join(fug_loot)
     fug_loot = "```\n{}```".format(fug_loot)
-    await client.send_message(ctx.message.channel, fug_loot)
+    await ctx.message.channel.send(fug_loot)
 
 
 #CORE
 
 #write here
 
-client.run(config.token)
+bot.run(config['token'])
