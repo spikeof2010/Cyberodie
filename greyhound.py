@@ -1,14 +1,18 @@
 import datetime
 import random
 import re
+import json
 
 import discord
 from discord.ext import commands
 
 import birdfunctions
 
+
+config = json.load(open("config.json"))
+
 client = discord.Client()
-bot = commands.Bot(command_prefix='=')
+bot = commands.Bot(command_prefix=config.prefix)
 userlist = []
 chirplog = open("chirplog.txt", "w")
 
@@ -22,40 +26,33 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    print('<{:%Y-%m-%d %H:%M}'.format(datetime.datetime.now()) + "|" + str(message.author) + "|#" + str(message.channel) + "> "  + message.content)
-    chirplog = open("chirplog.txt", "a")
-    chirplog.write('<{:%Y-%m-%d %H:%M}'.format(datetime.datetime.now()) + "|" + str(message.author) + "|#" + str(message.channel) + "> "  + message.content + "\n")
-    peptalk = True
-    if message.author.id == "549027052750372894":
+    if message.author.bot or message.author.id == client.user.id:
         return
     await bot.process_commands(message)
 
-    if message.author.id == "165949638770163713":
+    if message.author.id == config.ownerId:
         if message.content.lower().startswith("/echo"):
             await client.delete_message(message)
     
 
-    if(message.author.id == "549027052750372894"):
-        one = 1
-    else:
-        if message.content.lower().startswith("chirp"):
-            await client.send_message(message.channel, "coocoo")
-        if message.content.lower().startswith("hoot"):
-            await client.send_message(message.channel, "who?")
-        if message.content.lower().startswith("caw"):
-            await client.send_message(message.channel, "caw")
-        if message.content.lower().startswith("cheep"):
-            await client.send_message(message.channel, "tweet tweet")
-        if message.content.lower().startswith("cluck"):
-            await client.send_message(message.channel, "cock-a-doodle-doo")
-        if message.content.lower().startswith("good bot"):
-            await client.send_message(message.channel, "<3")
-        if message.content.lower().startswith("oh yeah yeah"):
-            await client.send_message(message.channel, "oh yeah yeah yeah yeah")
-        if message.content.lower().startswith("show me the pidove") or message.content.lower().startswith("show me pidove") or message.content.lower().startswith("show me the bird"):
-            await client.send_message(message.channel, "<:pidove:277147728071360513>")
-        if message.content.lower().startswith("show me the grookey") or message.content.lower().startswith("show me grookey") or message.content.lower().startswith("who is the best gen 8 starter?"):
-            await client.send_message(message.channel, "<:grook:550434809038766090>")
+    if message.content.lower().startswith("chirp"):
+        await client.send_message(message.channel, "coocoo")
+    if message.content.lower().startswith("hoot"):
+        await client.send_message(message.channel, "who?")
+    if message.content.lower().startswith("caw"):
+        await client.send_message(message.channel, "caw")
+    if message.content.lower().startswith("cheep"):
+        await client.send_message(message.channel, "tweet tweet")
+    if message.content.lower().startswith("cluck"):
+        await client.send_message(message.channel, "cock-a-doodle-doo")
+    if message.content.lower().startswith("good bot"):
+        await client.send_message(message.channel, "<3")
+    if message.content.lower().startswith("oh yeah yeah"):
+        await client.send_message(message.channel, "oh yeah yeah yeah yeah")
+    if message.content.lower().startswith("show me the pidove") or message.content.lower().startswith("show me pidove") or message.content.lower().startswith("show me the bird"):
+        await client.send_message(message.channel, "<:pidove:277147728071360513>")
+    if message.content.lower().startswith("show me the grookey") or message.content.lower().startswith("show me grookey") or message.content.lower().startswith("who is the best gen 8 starter?"):
+        await client.send_message(message.channel, "<:grook:550434809038766090>")
     #battle command
     global userlist
     if "=battle" in message.content:
@@ -80,29 +77,29 @@ async def on_message(message):
         
 
 #CORE
-@bot.command(pass_context=True)
+@bot.command()
 async def ping(ctx):  
     await client.send_message(ctx.message.channel, "Pong")
 
-@bot.command(pass_context=True)
+@bot.command()
 async def trueecho(ctx, *args):  
     await client.delete_message(ctx.message)
     await client.send_message(ctx.message.channel, ' '.join(args))
 
-@bot.command(pass_context=True)
+@bot.command()
 async def echo(ctx, *args):  
     await client.send_message(ctx.message.channel, ' '.join(args))
 
-@bot.command(pass_context=True)
+@bot.command()
 async def version(ctx): 
     await client.send_message(ctx.message.channel, "Chirptown")
 
-@bot.command(pass_context=True)
+@bot.command()
 async def patreon(ctx): 
     await client.send_message(ctx.message.channel, "Donate to my patreon!\n <http://tinyurl.com/berdpatreon>")
 
 #pyramid command
-@bot.command(pass_context=True)
+@bot.command()
 async def pyramid(ctx, *args): 
     args = " ".join(args)
     pyr_chars = list(args)
@@ -115,7 +112,7 @@ async def pyramid(ctx, *args):
     await client.send_message(ctx.message.channel, pyr)
 
 #help commands
-@bot.command(pass_context=True)
+@bot.command()
 async def commands(ctx): 
     await client.send_message(ctx.message.channel, """```
     o===Commands===o
@@ -133,6 +130,8 @@ async def commands(ctx):
 @bot.command(pass_context=True)
 async def playing(ctx, *args): 
     args = ' '.join(args)
+    if(ctx.message.author.id != config.ownerId):
+        return
     try:
          await client.change_presence(game=discord.Game(name=args))
          await client.send_message(ctx.message.channel, "Now playing " + args)
@@ -232,4 +231,4 @@ async def loot(ctx, *args):
 
 #write here
 
-#bot token here
+client.run(config.token)
